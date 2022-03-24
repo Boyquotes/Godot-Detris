@@ -23,6 +23,10 @@ _global_script_class_icons={
 config/name="Detris"
 config/icon="res://icon.png"
 
+[autoload]
+
+Global="*res://Global.tscn"
+
 [physics]
 
 common/enable_pause_aware_picking=true
