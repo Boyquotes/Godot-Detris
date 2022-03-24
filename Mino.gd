@@ -17,7 +17,7 @@ const TEXTURES = {
 	O: preload("res://textures/O.png"),
 	I: preload("res://textures/I.png"),
 	S: preload("res://textures/S.png"),
-	Z: preload("res://textures/S.png"),
+	Z: preload("res://textures/Z.png"),
 	L: preload("res://textures/L.png"),
 	J: preload("res://textures/J.png"),
 }
