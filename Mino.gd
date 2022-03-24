@@ -1,3 +1,4 @@
+class_name Mino
 extends Node2D
 
 
@@ -211,7 +212,7 @@ var shape = T setget set_shape
 var rot := 0 setget set_rot
 
 
-func _draw():
+func _draw() -> void:
 	for i in 4:
 		for j in 4:
 			if SHAPES[shape][rot][i + 4 * j]:
@@ -231,5 +232,5 @@ func set_rot(rot_ : int) -> void:
 	update()
 
 
-func get_bitfield():
+func get_bitfield() -> PoolIntArray:
 	return SHAPES[shape][rot]
