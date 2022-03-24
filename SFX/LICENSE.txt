@@ -2,5 +2,6 @@ The following files are copyright Little Robot Sound Factory:
 - Menu_Navigate_00.wav
 - Menu_Navigate_02.wav
 - Menu_Navigate_03.wav
+- Shoot_01.wav
 
 Attribute Little Robot Sound Factory, and provide this link where possible: www.littlerobotsoundfactory.com

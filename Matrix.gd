@@ -3,6 +3,7 @@ extends Node2D
 
 signal queued_mino_requested
 signal held_mino_requested
+signal lines_cleared (amount)
 
 
 const WIDTH := 10
@@ -168,6 +169,7 @@ func spawn_mino(shape : int) -> void:
 func lock_mino() -> void:
 	just_held = false
 	$LockSFX.play()
+	clear_completed_lines()
 	emit_signal("queued_mino_requested")
 
 
@@ -176,6 +178,25 @@ func hold_mino() -> void:
 	remove_mino_from_grid()
 	$HoldSFX.play()
 	emit_signal("held_mino_requested")
+
+
+func clear_completed_lines() -> void:
+	var cleared : PoolIntArray = []
+
+	for j in HEIGHT:
+		var complete = true
+		for i in WIDTH:
+			if not grid[i + WIDTH * j]:
+				complete = false
+				break
+		if complete:
+			cleared.push_back(j)
+
+	if cleared.size() > 0:
+		for line in cleared: # Note that we must go from top to bottom here
+			clear_line(line)
+		$LineClearSFX.play()
+		emit_signal("lines_cleared", cleared.size())
 
 
 func clear_line(line : int) -> void:
