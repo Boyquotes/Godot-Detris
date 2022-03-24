@@ -19,9 +19,9 @@ func _draw() -> void:
 func pop_queue() -> int:
 	var ret = queue[0]
 	queue.remove(0)
-	update_minos()
 	if queue.size() < 4:
 		refresh_queue()
+	update_minos()
 	return ret
 
 
