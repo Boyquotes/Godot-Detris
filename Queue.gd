@@ -32,6 +32,15 @@ func update_minos() -> void:
 	$Mino4.set_shape(queue[3])
 
 
+# Appends a random permutation of all 7 minos to the queue
 func refresh_queue() -> void:
+	var bag_unmixed : PoolIntArray = [1, 2, 3, 4, 5, 6, 7]
+	var bag_mixed : PoolIntArray = []
+
 	for i in 7:
-		queue.push_back(randi() % 7 + 1)
+		var idx = randi() % bag_unmixed.size()
+		var r = bag_unmixed[idx]
+		bag_unmixed.remove(idx)
+		bag_mixed.push_back(r)
+
+	queue.append_array(bag_mixed)
