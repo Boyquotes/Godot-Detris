@@ -8,6 +8,16 @@
 
 config_version=4
 
+_global_script_classes=[ {
+"base": "Node2D",
+"class": "Mino",
+"language": "GDScript",
+"path": "res://Mino.gd"
+} ]
+_global_script_class_icons={
+"Mino": ""
+}
+
 [application]
 
 config/name="Detris"
