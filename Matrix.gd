@@ -27,6 +27,7 @@ func _ready() -> void:
 
 
 func _draw() -> void:
+	draw_rect(Rect2(Vector2.ZERO, Vector2(WIDTH, HEIGHT) * 16), Color.gray)
 	for i in WIDTH:
 		for j in HEIGHT:
 			if grid[i + j * WIDTH]:
