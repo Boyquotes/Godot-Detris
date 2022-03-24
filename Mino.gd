@@ -207,5 +207,13 @@ const SHAPES = {
 }
 
 
+var shape = T
+var rot := 0
+
+
 func _draw():
-	pass
+	for i in 4:
+		for j in 4:
+			if SHAPES[shape][rot][i + 4 * j]:
+				var r = Rect2(position + Vector2(i * 16, j * 16), Vector2.ONE * 16)
+				draw_texture_rect(TEXTURES[shape], r, false)
