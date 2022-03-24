@@ -123,6 +123,8 @@ func rotate_mino(clockwise : bool) -> void:
 	if not can_fit_in_grid():
 		# TODO: Test if it can be fit by shifting slightly
 		mino.rot = (mino.rot - rot) % 4
+	else:
+		$SpinSFX.play()
 	add_mino_to_grid()
 
 
@@ -165,12 +167,14 @@ func spawn_mino(shape : int) -> void:
 
 func lock_mino() -> void:
 	just_held = false
+	$LockSFX.play()
 	emit_signal("queued_mino_requested")
 
 
 func hold_mino() -> void:
 	just_held = true
 	remove_mino_from_grid()
+	$HoldSFX.play()
 	emit_signal("held_mino_requested")
 
 
