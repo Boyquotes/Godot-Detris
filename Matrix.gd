@@ -16,6 +16,7 @@ var mino := {
 	"x": 0,
 	"y": 0,
 }
+var just_held = false
 
 
 func _init() -> void:
@@ -31,7 +32,7 @@ func _process(_delta : float) -> void:
 	if mino.shape == 0: # Locked out of actions until we get a mino
 		return
 
-	if Input.is_action_just_pressed("mino_hold"):
+	if Input.is_action_just_pressed("mino_hold") and not just_held:
 		hold_mino()
 		return
 
@@ -163,10 +164,12 @@ func spawn_mino(shape : int) -> void:
 
 
 func lock_mino() -> void:
+	just_held = false
 	emit_signal("queued_mino_requested")
 
 
 func hold_mino() -> void:
+	just_held = true
 	remove_mino_from_grid()
 	emit_signal("held_mino_requested")
 
