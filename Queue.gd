@@ -13,7 +13,7 @@ func _ready() -> void:
 
 
 func _draw() -> void:
-	draw_rect(Rect2(position, Vector2(80, 300)), Color.gray)
+	draw_rect(Rect2(Vector2.ZERO, Vector2(80, 300)), Color.gray)
 
 
 func pop_queue() -> int:

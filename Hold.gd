@@ -5,7 +5,7 @@ var mino : Mino = null setget set_mino
 
 
 func _draw() -> void:
-	draw_rect(Rect2(position, Vector2(80, 80)), Color.gray)
+	draw_rect(Rect2(Vector2.ZERO, Vector2(80, 80)), Color.gray)
 
 
 func swap_mino(new_mino : Mino) -> Mino:
