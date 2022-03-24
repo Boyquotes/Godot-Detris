@@ -27,6 +27,32 @@ func _ready() -> void:
 	emit_signal("queued_mino_requested")
 
 
+func _process(_delta : float) -> void:
+	if mino.shape == 0: # Locked out of actions until we get a mino
+		return
+
+	if Input.is_action_just_pressed("mino_hold"):
+		hold_mino()
+		return
+
+	if Input.is_action_just_pressed("mino_hard_drop"):
+		hard_drop_mino()
+		return
+
+	if Input.is_action_just_pressed("mino_soft_drop"):
+		soft_drop_mino()
+
+	if Input.is_action_just_pressed("mino_right"):
+		translate_mino(true)
+	elif Input.is_action_just_pressed("mino_left"):
+		translate_mino(false)
+
+	if Input.is_action_just_pressed("mino_clockwise"):
+		rotate_mino(true)
+	elif Input.is_action_just_pressed("mino_anticlockwise"):
+		rotate_mino(false)
+
+
 func _draw() -> void:
 	draw_rect(Rect2(Vector2.ZERO, Vector2(WIDTH, HEIGHT) * 16), Color.gray)
 	for i in WIDTH:

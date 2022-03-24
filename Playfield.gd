@@ -1,7 +1,7 @@
 extends Node2D
 
 
-func _unhandled_input(event):
+func _unhandled_input(event : InputEvent) -> void:
 	print(event.to_string())
 
 
