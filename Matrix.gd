@@ -2,6 +2,7 @@ extends Node2D
 
 
 signal queued_mino_requested
+signal held_mino_requested
 
 
 const WIDTH := 10
@@ -137,6 +138,11 @@ func spawn_mino(shape : int) -> void:
 
 func lock_mino() -> void:
 	emit_signal("queued_mino_requested")
+
+
+func hold_mino() -> void:
+	emit_signal("held_mino_requested")
+	remove_mino_from_grid()
 
 
 func clear_line(line : int) -> void:
