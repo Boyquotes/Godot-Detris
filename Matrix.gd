@@ -167,8 +167,8 @@ func lock_mino() -> void:
 
 
 func hold_mino() -> void:
-	emit_signal("held_mino_requested")
 	remove_mino_from_grid()
+	emit_signal("held_mino_requested")
 
 
 func clear_line(line : int) -> void:

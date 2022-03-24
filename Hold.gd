@@ -11,6 +11,7 @@ func _draw() -> void:
 func swap_mino(new_shape : int) -> int:
 	if not mino:
 		mino = Mino.new()
+		add_child(mino)
 		mino.set_shape(new_shape)
 		return 0
 	else:
