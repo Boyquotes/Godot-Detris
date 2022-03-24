@@ -207,8 +207,8 @@ const SHAPES = {
 }
 
 
-var shape = T
-var rot := 0
+var shape = T setget set_shape
+var rot := 0 setget set_rot
 
 
 func _draw():
@@ -217,3 +217,19 @@ func _draw():
 			if SHAPES[shape][rot][i + 4 * j]:
 				var r = Rect2(position + Vector2(i * 16, j * 16), Vector2.ONE * 16)
 				draw_texture_rect(TEXTURES[shape], r, false)
+
+
+func set_shape(shape_ : int) -> void:
+	assert(TEXTURES[shape], "Invalid shape %d set" % shape_)
+	shape = shape_
+	update()
+
+
+func set_rot(rot_ : int) -> void:
+	assert(0 <= rot and rot <= 3, "Invalid rotation %d set" % rot_)
+	rot = rot_
+	update()
+
+
+func get_bitfield():
+	return SHAPES[shape][rot]

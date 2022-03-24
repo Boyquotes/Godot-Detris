@@ -2,5 +2,5 @@
 
 [ext_resource path="res://Mino.gd" type="Script" id=1]
 
-[node name="Node" type="Node2D"]
+[node name="Mino" type="Node2D"]
 script = ExtResource( 1 )
