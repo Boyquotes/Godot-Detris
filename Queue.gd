@@ -34,4 +34,4 @@ func update_minos() -> void:
 
 func refresh_queue() -> void:
 	for i in 7:
-		queue.push_back(randi() % 7)
+		queue.push_back(randi() % 7 + 1)

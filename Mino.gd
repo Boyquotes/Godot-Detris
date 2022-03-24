@@ -3,7 +3,7 @@ extends Node2D
 
 
 enum {
-	T,
+	T = 1,
 	O,
 	I,
 	S,
