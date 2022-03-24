@@ -11,7 +11,17 @@ enum {
 	J,
 }
 
-const MINOS = {
+const TEXTURES = {
+	T: preload("res://textures/T.png"),
+	O: preload("res://textures/O.png"),
+	I: preload("res://textures/I.png"),
+	S: preload("res://textures/S.png"),
+	Z: preload("res://textures/S.png"),
+	L: preload("res://textures/L.png"),
+	J: preload("res://textures/J.png"),
+}
+
+const SHAPES = {
 	T: [
 		[
 			0,0,0,0,
