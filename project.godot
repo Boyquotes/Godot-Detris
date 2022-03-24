@@ -13,10 +13,6 @@ config_version=4
 config/name="Detris"
 config/icon="res://icon.png"
 
-[autoload]
-
-Mino="*res://Mino.gd"
-
 [physics]
 
 common/enable_pause_aware_picking=true

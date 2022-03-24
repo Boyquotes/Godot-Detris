@@ -1,4 +1,4 @@
-extends Node
+extends Node2D
 
 
 enum {
@@ -205,3 +205,7 @@ const SHAPES = {
 		],
 	],
 }
+
+
+func _draw():
+	pass
