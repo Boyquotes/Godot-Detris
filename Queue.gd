@@ -16,7 +16,7 @@ func _draw() -> void:
 	draw_rect(Rect2(Vector2.ZERO, Vector2(80, 300)), Color.gray)
 
 
-func pop_queue() -> int:
+func pop() -> int:
 	var ret = queue[0]
 	queue.remove(0)
 	if queue.size() < 4:
