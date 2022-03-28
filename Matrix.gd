@@ -9,6 +9,7 @@ signal hard_dropped
 
 const WIDTH := 10
 const HEIGHT := 20
+const SHADOW_TEX = preload("res://textures/shadow.png")
 
 
 var grid : PoolIntArray = []
@@ -59,6 +60,17 @@ func _unhandled_key_input(event : InputEventKey) -> void:
 
 
 func _draw() -> void:
+	# Draw shadow mino first
+	var drop_distance = drop_mino(20, true)
+	for i in 4:
+		for j in 4:
+			if Mino.SHAPES[mino.shape][mino.rot][i + 4 * j]:
+				var target_x = mino.x + i
+				var target_y = mino.y + j + drop_distance
+				if not grid[target_x + WIDTH * target_y]:
+					var r = Rect2(Vector2(target_x, target_y) * 16, Vector2.ONE * 16)
+					draw_texture_rect(SHADOW_TEX, r, false)
+
 	for i in WIDTH:
 		for j in HEIGHT:
 			if grid[i + j * WIDTH]:
@@ -96,7 +108,7 @@ func soft_drop_mino() -> void:
 
 
 # Drops mino as far as possible up to distance. Returns actual distance moved.
-func drop_mino(distance : int) -> int:
+func drop_mino(distance : int, dry_run : bool = false) -> int:
 	var original_y = mino.y
 
 	remove_mino_from_grid()
@@ -105,9 +117,12 @@ func drop_mino(distance : int) -> int:
 		if not can_fit_in_grid():
 			mino.y -= 1
 			break
+	var final_y = mino.y
+	if dry_run:
+		mino.y = original_y
 	add_mino_to_grid()
 
-	return mino.y - original_y
+	return final_y - original_y
 
 
 func translate_mino(right : bool) -> void:
