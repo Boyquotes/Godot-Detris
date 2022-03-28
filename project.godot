@@ -30,6 +30,7 @@ ScoreManager="*res://ScoreManager.tscn"
 
 [gui]
 
+theme/custom="res://default_theme.tres"
 theme/custom_font="res://fonts/Xolonium_dynamicfont.tres"
 
 [input]
