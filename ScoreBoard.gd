@@ -8,9 +8,9 @@ func _ready() -> void:
 
 
 func update_labels() -> void:
-	$Panel/ScoreNumber.text = "%07d" % ScoreManager.current_score
-	$Panel/HiScoreNumber.text = "%07d" % ScoreManager.high_score
-	$Panel/LevelNumber.text = "%d" % ScoreManager.current_level
+	$ScoreNumber.text = "%07d" % ScoreManager.current_score
+	$HiScoreNumber.text = "%07d" % ScoreManager.high_score
+	$LevelNumber.text = "%d" % ScoreManager.current_level
 
 
 func _on_ScoreManager_scores_updated() -> void:
