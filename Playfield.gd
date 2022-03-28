@@ -1,18 +1,21 @@
 extends Node2D
 
 
-func _unhandled_input(event : InputEvent) -> void:
-	print(event.to_string())
+func _ready() -> void:
+	# warning-ignore: RETURN_VALUE_DISCARDED
+	$Matrix.connect("soft_dropped", ScoreManager, "_on_Matrix_soft_dropped")
+	# warning-ignore: RETURN_VALUE_DISCARDED
+	$Matrix.connect("hard_dropped", ScoreManager, "_on_Matrix_hard_dropped")
+	# warning-ignore: RETURN_VALUE_DISCARDED
+	$Matrix.connect("lines_cleared", ScoreManager, "_on_Matrix_lines_cleared")
 
 
 func _on_Matrix_queued_mino_requested() -> void:
-	print("Matrix requested queued mino")
 	var queued = $Queue.pop()
 	$Matrix.spawn_mino(queued)
 
 
 func _on_Matrix_held_mino_requested() -> void:
-	print("Matrix requested held mino")
 	var new_shape = $Hold.swap_mino($Matrix.mino.shape)
 	if not new_shape:
 		new_shape = $Queue.pop()
