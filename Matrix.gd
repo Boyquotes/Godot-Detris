@@ -185,6 +185,7 @@ func spawn_mino(shape : int) -> void:
 	if has_lost:
 		$GameOverSFX.play()
 		$DropTimer.stop()
+		set_process_unhandled_key_input(false)
 		yield($GameOverSFX, "finished")
 		emit_signal("game_lost")
 
