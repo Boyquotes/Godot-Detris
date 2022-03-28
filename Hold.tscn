@@ -1,6 +1,16 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://Hold.gd" type="Script" id=2]
 
+[sub_resource type="StyleBoxFlat" id=1]
+
 [node name="Hold" type="Node2D"]
 script = ExtResource( 2 )
+
+[node name="Panel" type="Panel" parent="."]
+margin_right = 80.0
+margin_bottom = 80.0
+custom_styles/panel = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}

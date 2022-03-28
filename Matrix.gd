@@ -28,6 +28,7 @@ func _init() -> void:
 
 
 func _ready() -> void:
+	$Panel.rect_size = Vector2(WIDTH, HEIGHT) * 16
 	emit_signal("queued_mino_requested")
 
 
@@ -60,7 +61,6 @@ func _process(_delta : float) -> void:
 
 
 func _draw() -> void:
-	draw_rect(Rect2(Vector2.ZERO, Vector2(WIDTH, HEIGHT) * 16), Color.gray)
 	for i in WIDTH:
 		for j in HEIGHT:
 			if grid[i + j * WIDTH]:

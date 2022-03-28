@@ -12,10 +12,6 @@ func _ready() -> void:
 	update_minos()
 
 
-func _draw() -> void:
-	draw_rect(Rect2(Vector2.ZERO, Vector2(80, 300)), Color.gray)
-
-
 func pop() -> int:
 	var ret = queue[0]
 	queue.remove(0)
