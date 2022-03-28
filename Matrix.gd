@@ -44,12 +44,12 @@ func _unhandled_key_input(event : InputEventKey) -> void:
 		hard_drop_mino()
 		return
 
-	if event.is_action("mino_soft_drop"):
+	if event.is_action_pressed("mino_soft_drop", true):
 		soft_drop_mino()
 
-	if event.is_action("mino_right"):
+	if event.is_action_pressed("mino_right", true):
 		translate_mino(true)
-	elif event.is_action("mino_left"):
+	elif event.is_action_pressed("mino_left", true):
 		translate_mino(false)
 
 	if event.is_action_pressed("mino_clockwise"):
