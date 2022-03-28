@@ -14,6 +14,7 @@ func _input(event : InputEvent) -> void:
 		event.is_action_pressed("mino_clockwise")
 		or event.is_action_pressed("mino_anticlockwise")
 	):
+		set_process_input(false)
 		$AudioStreamPlayer.play()
 		$Control/Label.hide()
 		$BlinkTimer.start()
