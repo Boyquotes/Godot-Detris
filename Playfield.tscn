@@ -20,6 +20,5 @@ position = Vector2( 272, 0 )
 [node name="ScoreBoard" parent="." instance=ExtResource( 5 )]
 position = Vector2( 272, 200 )
 
-[connection signal="game_lost" from="Matrix" to="." method="_on_Matrix_game_lost"]
 [connection signal="held_mino_requested" from="Matrix" to="." method="_on_Matrix_held_mino_requested"]
 [connection signal="queued_mino_requested" from="Matrix" to="." method="_on_Matrix_queued_mino_requested"]

@@ -6,6 +6,8 @@ func _ready() -> void:
 	$Matrix.connect("hard_dropped", ScoreManager, "_on_Matrix_hard_dropped")
 	# warning-ignore: RETURN_VALUE_DISCARDED
 	$Matrix.connect("lines_cleared", ScoreManager, "_on_Matrix_lines_cleared")
+	# warning-ignore: RETURN_VALUE_DISCARDED
+	$Matrix.connect("game_lost", Global, "_on_Matrix_game_lost")
 
 
 func _on_Matrix_queued_mino_requested() -> void:
@@ -18,7 +20,3 @@ func _on_Matrix_held_mino_requested() -> void:
 	if not new_shape:
 		new_shape = $Queue.pop()
 	$Matrix.spawn_mino(new_shape)
-
-
-func _on_Matrix_game_lost() -> void:
-	print("does not want")
