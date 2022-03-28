@@ -31,30 +31,30 @@ func _ready() -> void:
 	emit_signal("queued_mino_requested")
 
 
-func _process(_delta : float) -> void:
+func _unhandled_key_input(event : InputEventKey) -> void:
 	if mino.shape == 0: # Locked out of actions until we get a mino
 		return
 
-	if Input.is_action_just_pressed("mino_hold") and not just_held:
+	if event.is_action_pressed("mino_hold") and not just_held:
 		hold_mino()
 		return
 
-	if Input.is_action_just_pressed("mino_hard_drop"):
+	if event.is_action_pressed("mino_hard_drop"):
 		emit_signal("hard_dropped")
 		hard_drop_mino()
 		return
 
-	if Input.is_action_just_pressed("mino_soft_drop"):
+	if event.is_action("mino_soft_drop"):
 		soft_drop_mino()
 
-	if Input.is_action_just_pressed("mino_right"):
+	if event.is_action("mino_right"):
 		translate_mino(true)
-	elif Input.is_action_just_pressed("mino_left"):
+	elif event.is_action("mino_left"):
 		translate_mino(false)
 
-	if Input.is_action_just_pressed("mino_clockwise"):
+	if event.is_action_pressed("mino_clockwise"):
 		rotate_mino(true)
-	elif Input.is_action_just_pressed("mino_anticlockwise"):
+	elif event.is_action_pressed("mino_anticlockwise"):
 		rotate_mino(false)
 
 
