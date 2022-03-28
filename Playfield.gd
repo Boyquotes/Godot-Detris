@@ -3,8 +3,6 @@ extends Node2D
 
 func _ready() -> void:
 	# warning-ignore: RETURN_VALUE_DISCARDED
-	$Matrix.connect("soft_dropped", ScoreManager, "_on_Matrix_soft_dropped")
-	# warning-ignore: RETURN_VALUE_DISCARDED
 	$Matrix.connect("hard_dropped", ScoreManager, "_on_Matrix_hard_dropped")
 	# warning-ignore: RETURN_VALUE_DISCARDED
 	$Matrix.connect("lines_cleared", ScoreManager, "_on_Matrix_lines_cleared")

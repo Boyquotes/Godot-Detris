@@ -8,8 +8,7 @@ export var points_single := 100
 export var points_double := 400
 export var points_triple := 900
 export var points_detris := 1600
-export var points_softdrop := 1
-export var points_harddrop := 20
+export var points_harddrop := 10
 
 var current_score := 0
 var current_level := 0
@@ -21,10 +20,6 @@ func increment_score(points : int) -> void:
 	if current_score > high_score:
 		high_score = current_score
 	emit_signal("scores_updated")
-
-
-func _on_Matrix_soft_dropped() -> void:
-	increment_score(points_softdrop)
 
 
 func _on_Matrix_hard_dropped() -> void:

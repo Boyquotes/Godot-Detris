@@ -4,7 +4,6 @@ extends Node2D
 signal queued_mino_requested
 signal held_mino_requested
 signal lines_cleared (amount)
-signal soft_dropped
 signal hard_dropped
 
 
@@ -46,7 +45,6 @@ func _process(_delta : float) -> void:
 		return
 
 	if Input.is_action_just_pressed("mino_soft_drop"):
-		emit_signal("soft_dropped")
 		soft_drop_mino()
 
 	if Input.is_action_just_pressed("mino_right"):
