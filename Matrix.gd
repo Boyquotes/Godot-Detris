@@ -1,10 +1,11 @@
 extends Node2D
 
 
-signal queued_mino_requested
-signal held_mino_requested
+signal queued_mino_requested ()
+signal held_mino_requested ()
 signal lines_cleared (amount)
-signal hard_dropped
+signal hard_dropped ()
+signal game_lost ()
 
 
 const WIDTH := 10
@@ -19,7 +20,7 @@ var mino := {
 	"x": 0,
 	"y": 0,
 }
-var just_held = false
+var just_held := false
 
 
 func _init() -> void:
@@ -179,8 +180,13 @@ func spawn_mino(shape : int) -> void:
 		"x": 3,
 		"y": 0,
 	}
-	# TODO: if not can_fit_in_grid(), lose
+	var has_lost := not can_fit_in_grid()
 	add_mino_to_grid()
+	if has_lost:
+		$GameOverSFX.play()
+		$DropTimer.stop()
+		yield($GameOverSFX, "finished")
+		emit_signal("game_lost")
 
 
 func lock_mino() -> void:

@@ -18,3 +18,7 @@ func _on_Matrix_held_mino_requested() -> void:
 	if not new_shape:
 		new_shape = $Queue.pop()
 	$Matrix.spawn_mino(new_shape)
+
+
+func _on_Matrix_game_lost() -> void:
+	print("does not want")
