@@ -1,6 +1,9 @@
 extends Node
 
 
+signal scores_updated
+
+
 export var points_single := 100
 export var points_double := 400
 export var points_triple := 900
@@ -17,6 +20,7 @@ func increment_score(points : int) -> void:
 	current_score += points
 	if current_score > high_score:
 		high_score = current_score
+	emit_signal("scores_updated")
 
 
 func _on_Matrix_soft_dropped() -> void:
