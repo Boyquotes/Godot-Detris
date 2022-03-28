@@ -3,9 +3,9 @@ extends Node2D
 
 func _ready() -> void:
 	# warning-ignore: RETURN_VALUE_DISCARDED
-	$Matrix.connect("hard_dropped", ScoreManager, "_on_Matrix_hard_dropped")
+	$Matrix.connect("hard_dropped", Global, "_on_Matrix_hard_dropped")
 	# warning-ignore: RETURN_VALUE_DISCARDED
-	$Matrix.connect("lines_cleared", ScoreManager, "_on_Matrix_lines_cleared")
+	$Matrix.connect("lines_cleared", Global, "_on_Matrix_lines_cleared")
 	# warning-ignore: RETURN_VALUE_DISCARDED
 	$Matrix.connect("game_lost", Global, "_on_Matrix_game_lost")
 
