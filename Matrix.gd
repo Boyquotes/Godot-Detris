@@ -161,7 +161,7 @@ func spawn_mino(shape : int) -> void:
 	mino = {
 		"shape": shape,
 		"rot": 0,
-		"x": 4,
+		"x": 3,
 		"y": 0,
 	}
 	# TODO: if not can_fit_in_grid(), lose
