@@ -10,7 +10,7 @@ export var points_triple := 900
 export var points_detris := 1600
 export var points_harddrop := 10
 
-var current_score := 0
+var current_score := 0 setget set_score
 var current_level := 0
 var high_score := 0
 
@@ -23,7 +23,11 @@ func _init() -> void:
 
 
 func increment_score(points : int) -> void:
-	current_score += points
+	set_score(current_score + points)
+
+
+func set_score(score_ : int) -> void:
+	current_score = score_
 	if current_score > high_score:
 		high_score = current_score
 	emit_signal("scores_updated")
@@ -54,4 +58,5 @@ func _on_TitleScreen_game_started() -> void:
 
 func _on_Matrix_game_lost() -> void:
 	# warning-ignore: RETURN_VALUE_DISCARDED
+	set_score(0)
 	get_tree().change_scene_to(title_scene)
