@@ -284,21 +284,32 @@ func clear_completed_lines() -> void:
 			cleared.push_back(j)
 
 	if cleared.size() > 0:
-		for line in cleared: # Note that we must go from top to bottom here
-			clear_line(line)
 		$LineClearSFX.play()
+		delete_cleared_lines(cleared)
+		drop_above_lines(cleared)
 		emit_signal("lines_cleared", cleared.size())
 
 
-func clear_line(line : int) -> void:
+# Replace cleared lines with blank space
+func delete_cleared_lines(lines : PoolIntArray) -> void:
 	var update_array : PoolVector2Array = []
-
-	for i in WIDTH:
-		update_array.push_back(Vector2(i + WIDTH * line, 0))
-		for j in line:
-			update_array.push_back(Vector2(i + WIDTH * (j + 1), grid[i + WIDTH * j]))
-
+	for line in lines:
+		for i in WIDTH:
+			update_array.push_back(Vector2(i + WIDTH * line, 0))
 	update_grid(update_array, true)
+
+
+# Apply gravity above cleared lines, which must be sorted from top to bottom
+func drop_above_lines(lines : PoolIntArray) -> void:
+	for line in lines:
+		var update_array : PoolVector2Array = []
+		for i in WIDTH:
+			for j in line:
+				update_array.push_back(Vector2(
+						i + WIDTH * (j + 1),
+						grid[i + WIDTH * j]
+				))
+		update_grid(update_array, true)
 
 
 func update_grid(new_tiles : PoolVector2Array, update_draw : bool) -> void:
