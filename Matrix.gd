@@ -12,6 +12,32 @@ const WIDTH := 10
 const HEIGHT := 20
 const SHADOW_TEX = preload("res://textures/shadow.png")
 
+const DROP_TIMES := PoolRealArray([
+	1.0,
+	0.9,
+	0.8,
+	0.7,
+	0.6,
+	0.5,
+	0.4,
+	0.3,
+	0.2,
+	0.1,
+])
+const LOCK_TIMES := PoolRealArray([
+	2.0,
+	1.9,
+	1.8,
+	1.7,
+	1.6,
+	1.5,
+	1.4,
+	1.3,
+	1.2,
+	1.1,
+	1.0,
+])
+
 
 var grid : PoolIntArray = []
 var mino := {
@@ -33,9 +59,10 @@ func _init() -> void:
 
 func _ready() -> void:
 	$Panel.rect_size = Vector2(WIDTH, HEIGHT) * Mino.SIZE
-	$DropTimer.set_wait_time(drop_timeout)
-	$LockTimer.set_wait_time(lock_timeout)
+	update_timers()
 	emit_signal("queued_mino_requested")
+	# warning-ignore: RETURN_VALUE_DISCARDED
+	Global.connect("level_updated", self, "_on_Global_level_updated")
 
 
 func _unhandled_key_input(event : InputEventKey) -> void:
@@ -281,7 +308,14 @@ func update_grid(new_tiles : PoolVector2Array, update_draw : bool) -> void:
 	if update_draw:
 		update()
 
-	
+
+func update_timers() -> void:
+	var drop_idx := min(Global.current_level, DROP_TIMES.size() - 1)
+	var lock_idx := min(Global.current_level, LOCK_TIMES.size() - 1)
+	$DropTimer.set_wait_time(DROP_TIMES[drop_idx])
+	$LockTimer.set_wait_time(LOCK_TIMES[lock_idx])
+
+
 func _on_DropTimer_timeout() -> void:
 	if mino.shape:
 		soft_drop_mino()
@@ -290,3 +324,7 @@ func _on_DropTimer_timeout() -> void:
 func _on_LockTimer_timeout() -> void:
 	if mino.shape:
 		lock_mino()
+
+
+func _on_Global_level_updated() -> void:
+	update_timers()
