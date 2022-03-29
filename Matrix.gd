@@ -12,6 +12,8 @@ const WIDTH := 10
 const HEIGHT := 20
 const SHADOW_TEX = preload("res://textures/shadow.png")
 
+const line_clear_scene : PackedScene = preload("res://LineClearVFX.tscn")
+
 const DROP_TIMES := PoolRealArray([
 	1.0,
 	0.9,
@@ -314,9 +316,20 @@ func list_completed_lines() -> PoolIntArray:
 func clear_lines(lines : PoolIntArray) -> void:
 	$LineClearSFX.play()
 	delete_cleared_lines(lines)
+
+	var vfx_scenes := []
+	for l in lines:
+		var scene = line_clear_scene.instance()
+		vfx_scenes.push_back(scene)
+		add_child(scene)
+		scene.set_position(Vector2(0, l * Mino.SIZE))
+
 	get_tree().paused = true
 	yield(get_tree().create_timer(line_clear_freeze), "timeout")
 	get_tree().paused = false
+
+	for scene in vfx_scenes:
+		scene.queue_free()
 	drop_above_lines(lines)
 	emit_signal("lines_cleared", lines.size())
 
