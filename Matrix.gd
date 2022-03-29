@@ -51,6 +51,8 @@ var just_held := false
 var drop_timeout := 1.0
 var lock_timeout := 2.0
 
+export var line_clear_freeze := 0.5
+
 
 func _init() -> void:
 	for i in WIDTH * HEIGHT:
@@ -63,6 +65,11 @@ func _ready() -> void:
 	emit_signal("queued_mino_requested")
 	# warning-ignore: RETURN_VALUE_DISCARDED
 	Global.connect("level_updated", self, "_on_Global_level_updated")
+
+
+func _process(_delta : float) -> void:
+	if mino.shape == 0:
+		emit_signal("queued_mino_requested")
 
 
 func _unhandled_key_input(event : InputEventKey) -> void:
@@ -93,16 +100,20 @@ func _unhandled_key_input(event : InputEventKey) -> void:
 
 
 func _draw() -> void:
-	# Draw shadow mino first
-	var drop_distance = drop_mino(20, true)
-	for i in 4:
-		for j in 4:
-			if Mino.SHAPES[mino.shape][mino.rot][i + 4 * j]:
-				var target_x = mino.x + i
-				var target_y = mino.y + j + drop_distance
-				if not grid[target_x + WIDTH * target_y]:
-					var r = Rect2(Vector2(target_x, target_y) * Mino.SIZE, Vector2.ONE * Mino.SIZE)
-					draw_texture_rect(SHADOW_TEX, r, false)
+	# Draw shadow mino first, if a mino is currently present
+	if mino.shape != 0:
+		var drop_distance = drop_mino(20, true)
+		for i in 4:
+			for j in 4:
+				if Mino.SHAPES[mino.shape][mino.rot][i + 4 * j]:
+					var target_x = mino.x + i
+					var target_y = mino.y + j + drop_distance
+					if not grid[target_x + WIDTH * target_y]:
+						var r = Rect2(
+								Vector2(target_x, target_y) * Mino.SIZE,
+								Vector2.ONE * Mino.SIZE
+						)
+						draw_texture_rect(SHADOW_TEX, r, false)
 
 	for i in WIDTH:
 		for j in HEIGHT:
@@ -245,7 +256,9 @@ func spawn_mino(shape : int) -> void:
 	if has_lost:
 		$GameOverSFX.play()
 		$DropTimer.stop()
+		$LockTimer.stop()
 		set_process_unhandled_key_input(false)
+		set_process(false)
 		yield($GameOverSFX, "finished")
 		emit_signal("game_lost")
 	else:
@@ -259,9 +272,11 @@ func spawn_mino(shape : int) -> void:
 
 func lock_mino() -> void:
 	just_held = false
+	mino.shape = 0
 	$LockSFX.play()
-	clear_completed_lines()
-	emit_signal("queued_mino_requested")
+	var completed_lines = list_completed_lines()
+	if completed_lines.size() > 0:
+		clear_lines(completed_lines)
 
 
 func hold_mino() -> void:
@@ -271,7 +286,7 @@ func hold_mino() -> void:
 	emit_signal("held_mino_requested")
 
 
-func clear_completed_lines() -> void:
+func list_completed_lines() -> PoolIntArray:
 	var cleared : PoolIntArray = []
 
 	for j in HEIGHT:
@@ -283,11 +298,17 @@ func clear_completed_lines() -> void:
 		if complete:
 			cleared.push_back(j)
 
-	if cleared.size() > 0:
-		$LineClearSFX.play()
-		delete_cleared_lines(cleared)
-		drop_above_lines(cleared)
-		emit_signal("lines_cleared", cleared.size())
+	return cleared
+
+
+func clear_lines(lines : PoolIntArray) -> void:
+	$LineClearSFX.play()
+	delete_cleared_lines(lines)
+	get_tree().paused = true
+	yield(get_tree().create_timer(line_clear_freeze), "timeout")
+	get_tree().paused = false
+	drop_above_lines(lines)
+	emit_signal("lines_cleared", lines.size())
 
 
 # Replace cleared lines with blank space
