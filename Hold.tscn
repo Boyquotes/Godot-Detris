@@ -6,8 +6,8 @@
 script = ExtResource( 2 )
 
 [node name="Panel" type="Panel" parent="."]
-margin_right = 80.0
-margin_bottom = 80.0
+margin_right = 112.0
+margin_bottom = 120.0
 __meta__ = {
 "_edit_use_anchors_": false
 }

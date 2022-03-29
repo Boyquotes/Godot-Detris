@@ -29,7 +29,7 @@ func _init() -> void:
 
 
 func _ready() -> void:
-	$Panel.rect_size = Vector2(WIDTH, HEIGHT) * 16
+	$Panel.rect_size = Vector2(WIDTH, HEIGHT) * Mino.SIZE
 	emit_signal("queued_mino_requested")
 
 
@@ -69,13 +69,13 @@ func _draw() -> void:
 				var target_x = mino.x + i
 				var target_y = mino.y + j + drop_distance
 				if not grid[target_x + WIDTH * target_y]:
-					var r = Rect2(Vector2(target_x, target_y) * 16, Vector2.ONE * 16)
+					var r = Rect2(Vector2(target_x, target_y) * Mino.SIZE, Vector2.ONE * Mino.SIZE)
 					draw_texture_rect(SHADOW_TEX, r, false)
 
 	for i in WIDTH:
 		for j in HEIGHT:
 			if grid[i + j * WIDTH]:
-				var r = Rect2(Vector2(i, j) * 16, Vector2.ONE * 16)
+				var r = Rect2(Vector2(i, j) * Mino.SIZE, Vector2.ONE * Mino.SIZE)
 				draw_texture_rect(Mino.TEXTURES[grid[i + j * WIDTH]], r, false)
 
 

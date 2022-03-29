@@ -12,6 +12,8 @@ enum {
 	J,
 }
 
+const SIZE = 24
+
 const TEXTURES = {
 	T: preload("res://textures/T.png"),
 	O: preload("res://textures/O.png"),
@@ -216,7 +218,7 @@ func _draw() -> void:
 	for i in 4:
 		for j in 4:
 			if SHAPES[shape][rot][i + 4 * j]:
-				var r = Rect2(Vector2(i, j) * 16, Vector2.ONE * 16)
+				var r = Rect2(Vector2(i, j) * SIZE, Vector2.ONE * SIZE)
 				draw_texture_rect(TEXTURES[shape], r, false)
 
 
