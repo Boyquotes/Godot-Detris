@@ -52,6 +52,7 @@ var drop_timeout := 1.0
 var lock_timeout := 2.0
 
 export var line_clear_freeze := 0.5
+export var game_over_freeze := 0.5
 
 
 func _init() -> void:
@@ -118,8 +119,15 @@ func _draw() -> void:
 	for i in WIDTH:
 		for j in HEIGHT:
 			if grid[i + j * WIDTH]:
-				var r = Rect2(Vector2(i, j) * Mino.SIZE, Vector2.ONE * Mino.SIZE)
+				var r := Rect2(Vector2(i, j) * Mino.SIZE, Vector2.ONE * Mino.SIZE)
 				draw_texture_rect(Mino.TEXTURES[grid[i + j * WIDTH]], r, false)
+
+
+func fill_game_over() -> void:
+	for j in HEIGHT:
+		for i in WIDTH:
+			yield(get_tree(), "idle_frame")
+			update_grid([Vector2(i + (HEIGHT - j - 1) * WIDTH, 8)], true)
 
 
 func can_fit_in_grid() -> bool:
@@ -254,12 +262,14 @@ func spawn_mino(shape : int) -> void:
 	var has_lost := not can_fit_in_grid()
 	add_mino_to_grid()
 	if has_lost:
-		$GameOverSFX.play()
 		$DropTimer.stop()
 		$LockTimer.stop()
 		set_process_unhandled_key_input(false)
 		set_process(false)
-		yield($GameOverSFX, "finished")
+		mino.shape = 0
+		yield(get_tree().create_timer(game_over_freeze), "timeout")
+		$GameOverSFX.play()
+		yield(fill_game_over(), "completed")
 		emit_signal("game_lost")
 	else:
 		if can_drop_mino():

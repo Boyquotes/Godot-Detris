@@ -22,6 +22,7 @@ const TEXTURES = {
 	Z: preload("res://textures/Z.png"),
 	L: preload("res://textures/L.png"),
 	J: preload("res://textures/J.png"),
+	8: preload("res://textures/X.png"),
 }
 
 const SHAPES = {
