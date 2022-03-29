@@ -325,6 +325,8 @@ func drop_above_lines(lines : PoolIntArray) -> void:
 	for line in lines:
 		var update_array : PoolVector2Array = []
 		for i in WIDTH:
+			# Blank out top row
+			update_array.push_back(Vector2(i, 0))
 			for j in line:
 				update_array.push_back(Vector2(
 						i + WIDTH * (j + 1),
