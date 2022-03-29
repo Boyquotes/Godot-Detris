@@ -22,6 +22,9 @@ var mino := {
 }
 var just_held := false
 
+var drop_timeout := 1.0
+var lock_timeout := 2.0
+
 
 func _init() -> void:
 	for i in WIDTH * HEIGHT:
@@ -30,6 +33,8 @@ func _init() -> void:
 
 func _ready() -> void:
 	$Panel.rect_size = Vector2(WIDTH, HEIGHT) * Mino.SIZE
+	$DropTimer.set_wait_time(drop_timeout)
+	$LockTimer.set_wait_time(lock_timeout)
 	emit_signal("queued_mino_requested")
 
 
@@ -106,6 +111,13 @@ func hard_drop_mino() -> void:
 func soft_drop_mino() -> void:
 	if drop_mino(1) == 0:
 		lock_mino()
+	else:
+		if can_drop_mino():
+			$LockTimer.stop()
+			$DropTimer.start()
+		else:
+			$DropTimer.stop()
+			$LockTimer.start()
 
 
 # Drops mino as far as possible up to distance. Returns actual distance moved.
@@ -126,6 +138,10 @@ func drop_mino(distance : int, dry_run : bool = false) -> int:
 	return final_y - original_y
 
 
+func can_drop_mino() -> bool:
+	return drop_mino(1, true) == 1
+
+
 func translate_mino(right : bool) -> void:
 	remove_mino_from_grid()
 	var tl := 1 if right else -1
@@ -133,6 +149,15 @@ func translate_mino(right : bool) -> void:
 	if not can_fit_in_grid():
 		mino.x -= tl
 	add_mino_to_grid()
+
+	if can_drop_mino():
+		$LockTimer.stop()
+		if $DropTimer.is_stopped():
+			$DropTimer.start()
+	else:
+		$DropTimer.stop()
+		if $LockTimer.is_stopped():
+			$LockTimer.start()
 
 
 func rotate_mino(clockwise : bool) -> void:
@@ -145,6 +170,14 @@ func rotate_mino(clockwise : bool) -> void:
 	else:
 		$SpinSFX.play()
 	add_mino_to_grid()
+
+	if can_drop_mino():
+		$LockTimer.stop()
+		if $DropTimer.is_stopped():
+			$DropTimer.start()
+	else:
+		$DropTimer.stop()
+		$LockTimer.start()
 
 
 # Does not redraw the grid, expecting the mino to be re-added elsewhere
@@ -188,6 +221,13 @@ func spawn_mino(shape : int) -> void:
 		set_process_unhandled_key_input(false)
 		yield($GameOverSFX, "finished")
 		emit_signal("game_lost")
+	else:
+		if can_drop_mino():
+			$LockTimer.stop()
+			$DropTimer.start()
+		else:
+			$DropTimer.stop()
+			$LockTimer.start()
 
 
 func lock_mino() -> void:
@@ -245,3 +285,8 @@ func update_grid(new_tiles : PoolVector2Array, update_draw : bool) -> void:
 func _on_DropTimer_timeout() -> void:
 	if mino.shape:
 		soft_drop_mino()
+
+
+func _on_LockTimer_timeout() -> void:
+	if mino.shape:
+		lock_mino()
