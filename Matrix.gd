@@ -257,6 +257,11 @@ func spawn_mino(shape : int) -> void:
 		"x": 3,
 		"y": 0,
 	}
+	if InputFilter.pressed("mino_left"):
+		mino.x -= 1
+	elif InputFilter.pressed("mino_right"):
+		mino.x += 1
+
 	var has_lost := not can_fit_in_grid()
 	add_mino_to_grid()
 	if has_lost:

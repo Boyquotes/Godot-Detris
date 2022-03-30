@@ -74,3 +74,12 @@ func just_pressed_or_echo(action : String) -> bool:
 		actions[action].state == JUST_PRESSED
 		or actions[action].state == ECHO
 	)
+
+
+func pressed(action : String) -> bool:
+	return (
+		actions[action].state == JUST_PRESSED
+		or actions[action].state == HELD_START
+		or actions[action].state == HELD_ECHO
+		or actions[action].state == ECHO
+	)
