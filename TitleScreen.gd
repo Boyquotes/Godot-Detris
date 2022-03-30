@@ -10,10 +10,10 @@ func _ready() -> void:
 	$Control/HiScore.text = "Hi: %07d" % Global.high_score
 
 
-func _input(event : InputEvent) -> void:
+func _process(_delta : float) -> void:
 	if (
-		event.is_action_pressed("mino_clockwise")
-		or event.is_action_pressed("mino_anticlockwise")
+		InputFilter.just_pressed("mino_clockwise")
+		or InputFilter.just_pressed("mino_anticlockwise")
 	):
 		set_process_input(false)
 		$AudioStreamPlayer.play()
