@@ -40,6 +40,18 @@ const LOCK_TIMES := PoolRealArray([
 	1.0,
 ])
 
+const rotate_tries = [
+	Vector2(0, 0),
+	Vector2(0, 1),
+	Vector2(0, -1),
+	Vector2(1, 0),
+	Vector2(-1, 0),
+	Vector2(1, 1),
+	Vector2(1, -1),
+	Vector2(-1, 1),
+	Vector2(-1, -1),
+]
+
 
 var grid : PoolIntArray = []
 var mino := {
@@ -208,20 +220,31 @@ func rotate_mino(clockwise : bool) -> void:
 	remove_mino_from_grid()
 	var rot := 1 if clockwise else -1
 	mino.rot = (mino.rot + rot) % 4
-	if not can_fit_in_grid():
-		# TODO: Test if it can be fit by shifting slightly
+
+	var rotated := false
+	for r in rotate_tries:
+		mino.x += r.x
+		mino.y += r.y
+		if can_fit_in_grid():
+			rotated = true
+			break
+		else:
+			mino.x -= r.x
+			mino.y -= r.y
+
+	if not rotated:
 		mino.rot = (mino.rot - rot) % 4
-	else:
-		$SpinSFX.play()
 	add_mino_to_grid()
 
-	if can_drop_mino():
-		$LockTimer.stop()
-		if $DropTimer.is_stopped():
-			$DropTimer.start()
-	else:
-		$DropTimer.stop()
-		$LockTimer.start()
+	if rotated:
+		$SpinSFX.play()
+		if can_drop_mino():
+			$LockTimer.stop()
+			if $DropTimer.is_stopped():
+				$DropTimer.start()
+		else:
+			$DropTimer.stop()
+			$LockTimer.start()
 
 
 # Does not redraw the grid, expecting the mino to be re-added elsewhere
