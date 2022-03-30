@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Matrix.gd" type="Script" id=1]
 [ext_resource path="res://SFX/Menu_Navigate_03.wav" type="AudioStream" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://SFX/Menu_Navigate_02.wav" type="AudioStream" id=4]
 [ext_resource path="res://SFX/Shoot_01.wav" type="AudioStream" id=5]
 [ext_resource path="res://SFX/Jingle_Lose_01.wav" type="AudioStream" id=6]
+[ext_resource path="res://SFX/Shoot_02.wav" type="AudioStream" id=7]
 
 [node name="Matrix" type="Node2D"]
 script = ExtResource( 1 )
@@ -40,6 +41,10 @@ __meta__ = {
 
 [node name="GameOverSFX" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 6 )
+
+[node name="TspinSFX" type="AudioStreamPlayer" parent="."]
+pause_mode = 2
+stream = ExtResource( 7 )
 
 [connection signal="timeout" from="DropTimer" to="." method="_on_DropTimer_timeout"]
 [connection signal="timeout" from="LockTimer" to="." method="_on_LockTimer_timeout"]

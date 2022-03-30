@@ -3,7 +3,7 @@ extends Node2D
 
 signal queued_mino_requested ()
 signal held_mino_requested ()
-signal lines_cleared (amount)
+signal lines_cleared (amount, tspin)
 signal hard_dropped ()
 signal game_lost ()
 
@@ -13,6 +13,7 @@ const HEIGHT := 20
 const SHADOW_TEX = preload("res://textures/shadow.png")
 
 const line_clear_scene : PackedScene = preload("res://LineClearVFX.tscn")
+const tspin_clear_scene : PackedScene = preload("res://TspinClearVFX.tscn")
 
 const DROP_TIMES := PoolRealArray([
 	1.0,
@@ -308,11 +309,21 @@ func spawn_mino(shape : int) -> void:
 
 func lock_mino() -> void:
 	just_held = false
-	mino.shape = 0
 	$LockSFX.play()
 	var completed_lines = list_completed_lines()
 	if completed_lines.size() > 0:
-		clear_lines(completed_lines)
+		var tspin = false
+		if mino.shape == Mino.T:
+			remove_mino_from_grid()
+			mino.y -= 1
+			if not can_fit_in_grid():
+				tspin = true
+			mino.y += 1
+			add_mino_to_grid()
+		mino.shape = 0
+		clear_lines(completed_lines, tspin)
+	else:
+		mino.shape = 0
 
 
 func hold_mino() -> void:
@@ -337,13 +348,16 @@ func list_completed_lines() -> PoolIntArray:
 	return cleared
 
 
-func clear_lines(lines : PoolIntArray) -> void:
-	$LineClearSFX.play()
+func clear_lines(lines : PoolIntArray, tspin : bool) -> void:
+	if tspin:
+		$TspinSFX.play()
+	else:
+		$LineClearSFX.play()
 	delete_cleared_lines(lines)
 
 	var vfx_scenes := []
 	for l in lines:
-		var scene = line_clear_scene.instance()
+		var scene = tspin_clear_scene.instance() if tspin else line_clear_scene.instance()
 		vfx_scenes.push_back(scene)
 		add_child(scene)
 		scene.set_position(Vector2(0, l * Mino.SIZE))
@@ -355,7 +369,7 @@ func clear_lines(lines : PoolIntArray) -> void:
 	for scene in vfx_scenes:
 		scene.queue_free()
 	drop_above_lines(lines)
-	emit_signal("lines_cleared", lines.size())
+	emit_signal("lines_cleared", lines.size(), tspin)
 
 
 # Replace cleared lines with blank space

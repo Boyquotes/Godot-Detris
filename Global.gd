@@ -13,6 +13,12 @@ const LINE_SCORES := PoolIntArray([
 	600,
 	1000,
 ])
+const TSPIN_SCORES := PoolIntArray([
+	0,
+	300,
+	800,
+	1400,
+])
 
 export var points_harddrop := 10
 export var lines_per_level := 10
@@ -66,9 +72,10 @@ func _on_Matrix_hard_dropped() -> void:
 	increment_score(points_harddrop)
 
 
-func _on_Matrix_lines_cleared(lines : int) -> void:
-	assert(lines <= LINE_SCORES.size() - 1, "Unexpected number of lines cleared: %d" % lines)
-	increment_score(current_level * LINE_SCORES[lines])
+func _on_Matrix_lines_cleared(lines : int, tspin : bool) -> void:
+	var scores = TSPIN_SCORES if tspin else LINE_SCORES
+	assert(lines <= scores.size() - 1, "Unexpected number of lines cleared: %d" % lines)
+	increment_score(current_level * scores[lines])
 	increment_lines(lines)
 
 
