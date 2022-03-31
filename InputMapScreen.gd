@@ -48,12 +48,7 @@ func _ready() -> void:
 	set_selected_option(0)
 	# warning-ignore: RETURN_VALUE_DISCARDED
 	connect("back_selected", Global, "_on_InputMapScreen_back_selected")
-	for o in options:
-		if not o.action:
-			continue
-		var name_label : Label = o.text_label.get_node("ButtonName")
-		var action = InputMap.get_action_list(o.action)[0]
-		name_label.text = action.as_text()
+	update_key_strings()
 
 
 func _process(_delta : float) -> void:
@@ -62,7 +57,8 @@ func _process(_delta : float) -> void:
 			$EditSFX.play()
 			set_process(false)
 			var new_key : InputEventKey = yield(InputFilter, "key_pressed")
-			print(new_key.as_text())
+			InputFilter.remap_action(options[selected_option].action, new_key)
+			update_key_strings()
 			$ConfirmSFX.play()
 			# Wait one full frame to prevent input getting consumed by _process.
 			# As we're effectively mid-frame when this is reached, it requires
@@ -81,6 +77,15 @@ func _process(_delta : float) -> void:
 	elif InputFilter.just_pressed("ui_up"):
 		$SelectSFX.play()
 		set_selected_option((selected_option - 1) % options.size())
+
+
+func update_key_strings() -> void:
+	for o in options:
+		if not o.action:
+			continue
+		var name_label : Label = o.text_label.get_node("ButtonName")
+		var action = InputMap.get_action_list(o.action)[0]
+		name_label.text = action.as_text()
 
 
 func set_selected_option(option_ : int) -> void:

@@ -85,3 +85,22 @@ func pressed(action : String) -> bool:
 		or actions[action].state == HELD_ECHO
 		or actions[action].state == ECHO
 	)
+
+
+# Actions are broken up by 'category', matched by the string preceding their first
+# underscore - e.g. ui_up, ui_down, ui_accept; and mino_clockwise, mino_left.
+# Two actions in a single category should never have overlapping events, so
+# remap_action() automatically swaps events if the new mapping would cause one
+# to emerge.
+func remap_action(action : String, event : InputEventKey) -> void:
+	var category := action.split("_", true, 1)[0]
+	for a in InputMap.get_actions():
+		if a == action or not a.begins_with(category):
+			continue
+		if InputMap.action_has_event(a, event):
+			# Swap mapping of 'a' and 'action'
+			InputMap.action_erase_events(a)
+			InputMap.action_add_event(a, InputMap.get_action_list(action)[0])
+
+	InputMap.action_erase_events(action)
+	InputMap.action_add_event(action, event)
