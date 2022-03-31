@@ -98,7 +98,10 @@ func _process(_delta : float) -> void:
 		hard_drop_mino()
 		return
 
-	if InputFilter.just_pressed_or_echo("mino_soft_drop"):
+	if (
+		(InputFilter.just_pressed_or_echo("mino_soft_drop") and can_drop_mino())
+		or InputFilter.just_pressed("mino_soft_drop")
+	):
 		soft_drop_mino()
 
 	if InputFilter.just_pressed_or_echo("mino_right") and not InputFilter.pressed("mino_left"):
