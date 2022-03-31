@@ -59,12 +59,6 @@ func _process(_delta : float) -> void:
 					actions[a].state = UNPRESSED
 
 
-func _input(event : InputEvent) -> void:
-	for a in InputMap.get_actions():
-		if event.is_action(a):
-			get_tree().set_input_as_handled()
-
-
 func just_pressed(action : String) -> bool:
 	return actions[action].state == JUST_PRESSED
 
