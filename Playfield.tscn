@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Hold.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Matrix.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Queue.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Playfield.gd" type="Script" id=4]
 [ext_resource path="res://ScoreBoard.tscn" type="PackedScene" id=5]
+[ext_resource path="res://music/House In a Forest Loop.ogg" type="AudioStream" id=6]
 
 [node name="Playfield" type="Node2D"]
 script = ExtResource( 4 )
@@ -21,5 +22,11 @@ position = Vector2( 376, 8 )
 [node name="ScoreBoard" parent="." instance=ExtResource( 5 )]
 position = Vector2( 376, 304 )
 
+[node name="BGM" type="AudioStreamPlayer" parent="."]
+pause_mode = 2
+stream = ExtResource( 6 )
+autoplay = true
+
+[connection signal="gameplay_finished" from="Matrix" to="." method="_on_Matrix_gameplay_finished"]
 [connection signal="held_mino_requested" from="Matrix" to="." method="_on_Matrix_held_mino_requested"]
 [connection signal="queued_mino_requested" from="Matrix" to="." method="_on_Matrix_queued_mino_requested"]

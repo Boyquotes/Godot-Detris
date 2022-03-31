@@ -10,6 +10,7 @@ func _ready() -> void:
 	$Matrix.connect("gameplay_finished", Global, "_on_Matrix_gameplay_finished")
 	# warning-ignore: RETURN_VALUE_DISCARDED
 	$Matrix.connect("game_lost", Global, "_on_Matrix_game_lost")
+	$BGM.play()
 
 
 func _on_Matrix_queued_mino_requested() -> void:
@@ -22,3 +23,7 @@ func _on_Matrix_held_mino_requested() -> void:
 	if not new_shape:
 		new_shape = $Queue.pop()
 	$Matrix.spawn_mino(new_shape)
+
+
+func _on_Matrix_gameplay_finished() -> void:
+	$BGM.stop()
