@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://textures/title_logo.png" type="Texture" id=1]
 [ext_resource path="res://fonts/Xolonium-Regular.ttf" type="DynamicFontData" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://SFX/Pickup_01.wav" type="AudioStream" id=4]
 [ext_resource path="res://SFX/Menu_Navigate_02.wav" type="AudioStream" id=5]
 [ext_resource path="res://SFX/Shoot_01.wav" type="AudioStream" id=6]
+[ext_resource path="res://fonts/highlight_font_40.tres" type="DynamicFont" id=7]
 
 [sub_resource type="DynamicFont" id=1]
 size = 40
@@ -20,6 +21,7 @@ font_data = ExtResource( 2 )
 
 [node name="TitleScreen" type="Node2D"]
 script = ExtResource( 3 )
+highlight_font = ExtResource( 7 )
 
 [node name="Control" type="Control" parent="."]
 margin_right = 512.0
@@ -107,10 +109,5 @@ wait_time = 0.3
 
 [node name="StartTimer" type="Timer" parent="."]
 one_shot = true
-
-[node name="Pointer" type="Polygon2D" parent="."]
-position = Vector2( 160, 304 )
-color = Color( 0, 0, 0, 1 )
-polygon = PoolVector2Array( 0, -8, 0, 8, 0, 8, 16, 0 )
 
 [connection signal="timeout" from="BlinkTimer" to="." method="_on_BlinkTimer_timeout"]
