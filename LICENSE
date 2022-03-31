@@ -2,6 +2,7 @@
 
 
 ## Original content
+
 Original code, program structure and art is copyright (c) 2022 Tori Lavrentiev
 and is made available under the following terms:
 
@@ -25,17 +26,20 @@ SOFTWARE.
 
 
 ## Copyrights and trademarks
+
 Tetris ® & © 1985~2022 Tetris Holding
 Tetris Game Design by Alexey Pajitnov
 
 
 ## Assets
+
 Credits for sounds used can be found in SFX/LICENSE.txt
 Credits for music used can be found in music/LICENSE.txt
 Credits for fonts used can be found in fonts/LICENSE.txt
 
 
 ## Godot Engine and third-party software
+
 This game uses Godot Engine, available under the following license:
 
 Copyright (c) 2007-2021 Juan Linietsky, Ariel Manzur. Copyright (c) 2014-2021 Godot Engine contributors.
