@@ -38,6 +38,9 @@ var title_options := {
 func _init() -> void:
 	randomize()
 	reset()
+
+
+func _ready() -> void:
 	load_game()
 
 
@@ -58,14 +61,17 @@ func load_game() -> void:
 		push_error("Could not open file for read: error %d" % err)
 		return
 
-	if file.get_position() >= file.get_len():
-		push_error("Could not load data: save file incomplete or corrupt")
-		return
-
-	var data_str := file.get_line()
-	var data_obj = parse_json(data_str)
-	if data_obj is Dictionary and "high_score" in data_obj:
-		high_score = int(data_obj.high_score)
+	while file.get_position() < file.get_len():
+		var data_str := file.get_line()
+		var data_obj = parse_json(data_str)
+		if data_obj is Dictionary and "_name" in data_obj:
+			match data_obj._name:
+				"scores":
+					high_score = int(data_obj.high_score)
+				"keymap":
+					InputFilter.load_mappings(data_obj)
+				_:
+					assert(false, "Unexpected line found loading data: %s" % data_obj.name)
 
 	file.close()
 
@@ -77,10 +83,13 @@ func save_game() -> void:
 		push_error("Could not open file for write: error %d" % err)
 		return
 
-	var data_obj := {
+	var scores := {
+		"_name": "scores",
 		"high_score": high_score,
 	}
-	file.store_line(to_json(data_obj))
+	file.store_line(to_json(scores))
+	var input_mappings = InputFilter.save_mappings()
+	file.store_line(to_json(input_mappings))
 
 	file.close()
 
@@ -132,6 +141,7 @@ func _on_TitleScreen_option_selected(option : String) -> void:
 func _on_InputMapScreen_back_selected() -> void:
 	# warning-ignore: RETURN_VALUE_DISCARDED
 	get_tree().change_scene_to(title_scene)
+	save_game()
 
 
 func _on_Matrix_gameplay_finished() -> void:

@@ -104,3 +104,22 @@ func remap_action(action : String, event : InputEventKey) -> void:
 
 	InputMap.action_erase_events(action)
 	InputMap.action_add_event(action, event)
+
+
+func save_mappings() -> Dictionary:
+	var ret = { "_name": "keymap" }
+	for a in InputMap.get_actions():
+		var event : InputEvent = InputMap.get_action_list(a)[0]
+		if event is InputEventKey:
+			ret[a] = InputMap.get_action_list(a)[0].get_scancode()
+	return ret
+
+
+func load_mappings(keymap : Dictionary) -> void:
+	for action in keymap.keys():
+		if action == "_name":
+			continue
+		var event : InputEventKey = InputEventKey.new()
+		event.set_scancode(keymap[action])
+		InputMap.action_erase_events(action)
+		InputMap.action_add_event(action, event)
