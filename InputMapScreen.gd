@@ -60,7 +60,16 @@ func _process(_delta : float) -> void:
 	if InputFilter.just_pressed("ui_accept"):
 		if options[selected_option].action:
 			$EditSFX.play()
-			# actually edit the binding
+			set_process(false)
+			var new_key : InputEventKey = yield(InputFilter, "key_pressed")
+			print(new_key.as_text())
+			$ConfirmSFX.play()
+			# Wait one full frame to prevent input getting consumed by _process.
+			# As we're effectively mid-frame when this is reached, it requires
+			# two idle_frame delays.
+			yield(get_tree(), "idle_frame")
+			yield(get_tree(), "idle_frame")
+			set_process(true)
 		else:
 			set_process(false)
 			$BackSFX.play()

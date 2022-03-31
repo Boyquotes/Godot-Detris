@@ -1,6 +1,9 @@
 extends Node
 
 
+signal key_pressed (input_event_key)
+
+
 enum {
 	UNPRESSED,
 	JUST_PRESSED,
@@ -57,6 +60,11 @@ func _process(_delta : float) -> void:
 					actions[a].held_frames = 0
 				JUST_RELEASED:
 					actions[a].state = UNPRESSED
+
+
+func _unhandled_key_input(event : InputEventKey) -> void:
+	if event.is_pressed():
+		emit_signal("key_pressed", event)
 
 
 func just_pressed(action : String) -> bool:

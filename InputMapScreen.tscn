@@ -216,3 +216,6 @@ stream = ExtResource( 5 )
 
 [node name="BackSFX" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 4 )
+
+[node name="ConfirmSFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 4 )
