@@ -5,6 +5,7 @@ signal queued_mino_requested ()
 signal held_mino_requested ()
 signal lines_cleared (amount, tspin)
 signal hard_dropped ()
+signal gameplay_finished ()
 signal game_lost ()
 
 
@@ -294,6 +295,7 @@ func spawn_mino(shape : int) -> void:
 		set_process_unhandled_key_input(false)
 		set_process(false)
 		mino.shape = 0
+		emit_signal("gameplay_finished")
 		yield(get_tree().create_timer(game_over_freeze), "timeout")
 		$GameOverSFX.play()
 		yield(fill_game_over(), "completed")

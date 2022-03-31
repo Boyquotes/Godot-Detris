@@ -35,12 +35,47 @@ var game_scene : PackedScene = preload("res://Playfield.tscn")
 func _init() -> void:
 	randomize()
 	reset()
+	load_game()
 
 
 func reset() -> void:
 	set_score(0)
 	set_lines(0)
 	current_level = 1
+
+
+func load_game() -> void:
+	var file : File = File.new()
+	if not file.file_exists("user://save.json"):
+		print("No save data exists, skipping load")
+		return
+
+	var err := file.open("user://save.json", File.READ)
+	if err:
+		push_error("Could not open file for read: error %d" % err)
+		return
+
+	var data_str := file.get_line()
+	var data_obj = parse_json(data_str)
+	if "high_score" in data_obj:
+		high_score = int(data_obj.high_score)
+
+	file.close()
+
+
+func save_game() -> void:
+	var file : File = File.new()
+	var err := file.open("user://save.json", File.WRITE)
+	if err:
+		push_error("Could not open file for write: error %d" % err)
+		return
+
+	var data_obj := {
+		"high_score": high_score,
+	}
+	file.store_line(to_json(data_obj))
+
+	file.close()
 
 
 func increment_score(points : int) -> void:
@@ -82,6 +117,10 @@ func _on_Matrix_lines_cleared(lines : int, tspin : bool) -> void:
 func _on_TitleScreen_game_started() -> void:
 	# warning-ignore: RETURN_VALUE_DISCARDED
 	get_tree().change_scene_to(game_scene)
+
+
+func _on_Matrix_gameplay_finished() -> void:
+	save_game()
 
 
 func _on_Matrix_game_lost() -> void:

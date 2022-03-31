@@ -7,6 +7,8 @@ func _ready() -> void:
 	# warning-ignore: RETURN_VALUE_DISCARDED
 	$Matrix.connect("lines_cleared", Global, "_on_Matrix_lines_cleared")
 	# warning-ignore: RETURN_VALUE_DISCARDED
+	$Matrix.connect("gameplay_finished", Global, "_on_Matrix_gameplay_finished")
+	# warning-ignore: RETURN_VALUE_DISCARDED
 	$Matrix.connect("game_lost", Global, "_on_Matrix_game_lost")
 
 
