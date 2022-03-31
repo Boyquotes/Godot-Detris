@@ -101,9 +101,9 @@ func _process(_delta : float) -> void:
 	if InputFilter.just_pressed_or_echo("mino_soft_drop"):
 		soft_drop_mino()
 
-	if InputFilter.just_pressed_or_echo("mino_right"):
+	if InputFilter.just_pressed_or_echo("mino_right") and not InputFilter.pressed("mino_left"):
 		translate_mino(true)
-	elif InputFilter.just_pressed_or_echo("mino_left"):
+	elif InputFilter.just_pressed_or_echo("mino_left") and not InputFilter.pressed("mino_right"):
 		translate_mino(false)
 
 	if InputFilter.just_pressed("mino_clockwise"):
