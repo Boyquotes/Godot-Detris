@@ -31,7 +31,7 @@ var high_score := 0
 var title_scene : PackedScene = preload("res://TitleScreen.tscn")
 var title_options := {
 	"Start": preload("res://Playfield.tscn"),
-	"Options": preload("res://TitleScreen.tscn"),
+	"Options": preload("res://InputMapScreen.tscn"),
 }
 
 

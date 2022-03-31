@@ -1,0 +1,202 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://fonts/Xolonium-Regular.ttf" type="DynamicFontData" id=1]
+
+[sub_resource type="DynamicFont" id=1]
+size = 32
+font_data = ExtResource( 1 )
+
+[sub_resource type="Theme" id=2]
+Label/fonts/font = SubResource( 1 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 40
+font_data = ExtResource( 1 )
+
+[node name="InputMapScreen" type="Node2D"]
+
+[node name="Control" type="Control" parent="."]
+margin_right = 512.0
+margin_bottom = 512.0
+theme = SubResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Title" type="Label" parent="Control"]
+anchor_right = 1.0
+margin_top = 8.0
+margin_bottom = 57.0
+custom_fonts/font = SubResource( 3 )
+text = "Remap controls"
+align = 1
+
+[node name="TurnLeft" type="Label" parent="Control"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -248.0
+margin_top = -136.0
+margin_right = 64.0
+margin_bottom = -97.0
+text = "Turn anticlockwise"
+align = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ButtonName" type="Label" parent="Control/TurnLeft"]
+margin_left = 320.0
+margin_right = 360.0
+margin_bottom = 39.0
+custom_colors/font_color = Color( 0.533333, 0.164706, 0.729412, 1 )
+text = "Z"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TurnRight" type="Label" parent="Control"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -192.0
+margin_top = -96.0
+margin_right = 64.0
+margin_bottom = -57.0
+text = "Turn clockwise"
+align = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ButtonName" type="Label" parent="Control/TurnRight"]
+margin_left = 264.0
+margin_right = 304.0
+margin_bottom = 39.0
+custom_colors/font_color = Color( 0.839216, 0.741176, 0.027451, 1 )
+text = "X"
+
+[node name="MoveLeft" type="Label" parent="Control"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -96.0
+margin_top = -56.0
+margin_right = 64.0
+margin_bottom = -17.0
+text = "Move left"
+align = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ButtonName" type="Label" parent="Control/MoveLeft"]
+margin_left = 168.0
+margin_right = 236.0
+margin_bottom = 39.0
+custom_colors/font_color = Color( 0, 0.533333, 0.670588, 1 )
+text = "Left"
+
+[node name="MoveRight" type="Label" parent="Control"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -120.0
+margin_top = -16.0
+margin_right = 64.0
+margin_bottom = 23.0
+text = "Move right"
+align = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ButtonName" type="Label" parent="Control/MoveRight"]
+margin_left = 192.0
+margin_right = 279.0
+margin_bottom = 39.0
+custom_colors/font_color = Color( 0.839216, 0.203922, 0.027451, 1 )
+text = "Right"
+
+[node name="SoftDrop" type="Label" parent="Control"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -96.0
+margin_top = 24.0
+margin_right = 64.0
+margin_bottom = 63.0
+text = "Soft drop"
+align = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ButtonName" type="Label" parent="Control/SoftDrop"]
+margin_left = 168.0
+margin_right = 264.0
+margin_bottom = 39.0
+custom_colors/font_color = Color( 0.027451, 0.839216, 0.160784, 1 )
+text = "Down"
+
+[node name="HardDrop" type="Label" parent="Control"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -104.0
+margin_top = 64.0
+margin_right = 64.0
+margin_bottom = 103.0
+text = "Hard drop"
+align = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ButtonName" type="Label" parent="Control/HardDrop"]
+margin_left = 176.0
+margin_right = 223.0
+margin_bottom = 39.0
+custom_colors/font_color = Color( 0.839216, 0.584314, 0.027451, 1 )
+text = "Up"
+
+[node name="Hold" type="Label" parent="Control"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -112.0
+margin_top = 104.0
+margin_right = 64.0
+margin_bottom = 143.0
+text = "Hold piece"
+align = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ButtonName" type="Label" parent="Control/Hold"]
+margin_left = 184.0
+margin_right = 263.0
+margin_bottom = 39.0
+custom_colors/font_color = Color( 0.027451, 0.247059, 0.839216, 1 )
+text = "Shift"
+
+[node name="Back" type="Label" parent="Control"]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -56.0
+margin_bottom = -17.0
+text = "Back"
+align = 1
