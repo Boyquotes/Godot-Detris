@@ -29,7 +29,10 @@ var current_lines := 0 setget set_lines
 var high_score := 0
 
 var title_scene : PackedScene = preload("res://TitleScreen.tscn")
-var game_scene : PackedScene = preload("res://Playfield.tscn")
+var title_options := {
+	"Start": preload("res://Playfield.tscn"),
+	"Options": preload("res://TitleScreen.tscn"),
+}
 
 
 func _init() -> void:
@@ -118,9 +121,12 @@ func _on_Matrix_lines_cleared(lines : int, tspin : bool) -> void:
 	increment_lines(lines)
 
 
-func _on_TitleScreen_game_started() -> void:
-	# warning-ignore: RETURN_VALUE_DISCARDED
-	get_tree().change_scene_to(game_scene)
+func _on_TitleScreen_option_selected(option : String) -> void:
+	if not option in title_options:
+		push_error("Selected unsupported option %s on TitleScreen" % option)
+	else:
+		# warning-ignore: RETURN_VALUE_DISCARDED
+		get_tree().change_scene_to(title_options[option])
 
 
 func _on_Matrix_gameplay_finished() -> void:
