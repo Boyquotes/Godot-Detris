@@ -19,10 +19,7 @@ func _ready() -> void:
 
 
 func _process(_delta : float) -> void:
-	if (
-		InputFilter.just_pressed("mino_clockwise")
-		or InputFilter.just_pressed("mino_anticlockwise")
-	):
+	if InputFilter.just_pressed("ui_accept"):
 		if options[selected_label] == $Control/StartLabel:
 			set_process(false)
 			$StartGameSFX.play()
