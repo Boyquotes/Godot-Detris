@@ -129,6 +129,11 @@ func _on_TitleScreen_option_selected(option : String) -> void:
 		get_tree().change_scene_to(title_options[option])
 
 
+func _on_InputMapScreen_back_selected() -> void:
+	# warning-ignore: RETURN_VALUE_DISCARDED
+	get_tree().change_scene_to(title_scene)
+
+
 func _on_Matrix_gameplay_finished() -> void:
 	save_game()
 

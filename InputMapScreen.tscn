@@ -1,6 +1,11 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://fonts/Xolonium-Regular.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://InputMapScreen.gd" type="Script" id=2]
+[ext_resource path="res://SFX/Menu_Navigate_02.wav" type="AudioStream" id=3]
+[ext_resource path="res://SFX/Menu_Navigate_00.wav" type="AudioStream" id=4]
+[ext_resource path="res://SFX/Menu_Navigate_03.wav" type="AudioStream" id=5]
+[ext_resource path="res://fonts/highlight_font.tres" type="DynamicFont" id=6]
 
 [sub_resource type="DynamicFont" id=1]
 size = 32
@@ -14,6 +19,8 @@ size = 40
 font_data = ExtResource( 1 )
 
 [node name="InputMapScreen" type="Node2D"]
+script = ExtResource( 2 )
+highlight_font = ExtResource( 6 )
 
 [node name="Control" type="Control" parent="."]
 margin_right = 512.0
@@ -200,3 +207,12 @@ margin_top = -56.0
 margin_bottom = -17.0
 text = "Back"
 align = 1
+
+[node name="SelectSFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 3 )
+
+[node name="EditSFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 5 )
+
+[node name="BackSFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 4 )
