@@ -55,6 +55,10 @@ func load_game() -> void:
 		push_error("Could not open file for read: error %d" % err)
 		return
 
+	if file.get_position() >= file.get_len():
+		push_error("Could not load data: save file incomplete or corrupt")
+		return
+
 	var data_str := file.get_line()
 	var data_obj = parse_json(data_str)
 	if "high_score" in data_obj:
