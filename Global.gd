@@ -61,7 +61,7 @@ func load_game() -> void:
 
 	var data_str := file.get_line()
 	var data_obj = parse_json(data_str)
-	if "high_score" in data_obj:
+	if data_obj is Dictionary and "high_score" in data_obj:
 		high_score = int(data_obj.high_score)
 
 	file.close()
