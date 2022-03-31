@@ -15,7 +15,7 @@ func _process(_delta : float) -> void:
 		InputFilter.just_pressed("mino_clockwise")
 		or InputFilter.just_pressed("mino_anticlockwise")
 	):
-		set_process_input(false)
+		set_process(false)
 		$AudioStreamPlayer.play()
 		$Control/StartLabel.hide()
 		$BlinkTimer.start()
